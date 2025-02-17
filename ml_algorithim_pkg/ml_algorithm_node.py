@@ -13,7 +13,8 @@ class AutonomousDriver(Node):
         self.bridge = CvBridge()
 
         # Load the trained model (assuming PyTorch for now)
-        self.model = torch.load('model.pth', map_location=torch.device('cpu'))
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = torch.load('model.pth', map_location=torch.device('cuda'))
         self.model.eval()  # Set model to inference mode
 
         # Subscribers and Publishers
