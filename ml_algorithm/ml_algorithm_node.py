@@ -170,7 +170,6 @@ class AutonomousDriver(Node):
         # Get steering prediction from the model
         control_values = self.predict_control(processed_frame)[0]
         
-        # self.get_logger().info(f"{control_values}")
 
         # Publish the control command
         self.publish_control(control_values)
@@ -197,8 +196,8 @@ class AutonomousDriver(Node):
         #     steering_angle = 0.5192
         steering_angle = (steering_angle - 0.5192)/-1.2
         msg.drive.steering_angle = steering_angle
-        msg.drive.speed = throttle * 23250.0 # de-normalize predictions - change to 23250 after next train
-        
+        msg.drive.speed = (throttle * 23250.0)/4614.0 # de-normalize predictions - change to 23250 after next train
+        # self.get_logger().info(f"{msg.drive.steering_angle,msg.drive.speed }")
         self.control_pub.publish(msg)
 
 def main(args=None):
